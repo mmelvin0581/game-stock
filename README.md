@@ -425,28 +425,24 @@ Even though the frontend and server are being exposed at different ports, we can
 ## Generate a type lib that the API and frontend can share
 
 - Stop serving both the API and the frontend
-- Generate a new `@nrwl/workspace` lib called `util-interface` inside the `libs/api` folder. Use `--linter=tslint` option
+- Generate a new `@nrwl/workspace` lib called `util-interface` inside the `libs` folder. Use `--linter=tslint` option
 
   ```bash
-  nx generate @nrwl/workspace:lib util-interface --directory=api --linter=tslint
+  nx generate @nrwl/workspace:lib util-interface --linter=tslint
   ```
 
-  ⚠️ It's **important** that we create it in the `/api` folder for now
-
-- Create your `Game` interface: see `libs/api/util-interface/src/lib/`[util-interface.ts](examples/GenerateSharedTypeLib/util-interface.ts)
-- Import it in the API service: `apps/api/src/app/app.service.ts`
+- Create your `Game` interface with [this code](examples/GenerateSharedTypeLib/util-interface.ts) replacing the newly created [util-interface.ts](libs/util-interface/src/lib/util-interface.ts)
+- Import it in the API service: [apps/api/src/app/app.service.ts](apps/api/src/app/app.service.ts)
 
   ⚠️ You might need to restart the Typescript compiler in your editor
 
   ```typescript
-    import { Game } from '@game-stock/api/util-interface';
+    import { Game } from '@game-stock/util-interface';
     const games: Game[] = [...];
   ```
 
 - Build the API and make sure there are no errors
 - Inspect the dependency graph
-
----
 
 Our frontend store makes calls to the API via the `HttpClient` service:
 
@@ -456,33 +452,21 @@ this.http.get<any>(`/api/games/${id}`);
 
 But it's currently typed to `any` - so our component has no idea about the shape of the objects it'll get back
 
-Let's fix that - we already have a `Game` interface in a lib. But it's nested in the `api` folder - we need to move it out to the root `libs/` folder so any project can use it
+Let's use the SAME interface that the backend is using.
 
----
+- In [apps/store/src/app/app.component.ts](apps/store/src/app/app.component.ts):
 
-- Use the `@nrwl/workspace:move` schematic to move the interface lib created above into the root `/libs` folder
+  ```typescript
+  import { Game } from '@game-stock/util-interface';
 
-  ```shell
-  nx generate @nrwl/workspace:move --projectName=api-util-interface util-interface
+  this.http.get<Game[]>('/api/games');
   ```
 
-- We can now import it in the frontend components and use it when making the `http` request:
+- Routed game detail component [libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.ts](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.ts):
 
-    Frontend store shell app: `apps/store/src/app/app.component.ts`
-
-    ```typescript
-    import { Game } from '@game-stock/util-interface';
-
-    this.http.get<Game[]>('/api/games');
-    ```
-
-    Routed game detail component: `libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.ts`
-
-    ```typescript
-    this.http.get<Game>(`/api/games/${id}`);
-    ```
-
-    ⚠️ Notice how we didn't have to update the imports in the API. The `move` schematic took care of that for us!
+  ```typescript
+  this.http.get<Game>(`/api/games/${id}`);
+  ```
 
 - Trigger a build of both the store and the API projects and make sure it passes
 - Inspect the dependency graph
