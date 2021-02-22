@@ -10,7 +10,18 @@ import { StoreUiSharedModule } from '@game-stock/store/ui-shared';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+    RouterModule.forRoot(
+      [
+        {
+          path: 'game/:id',
+          loadChildren: () =>
+            import('@game-stock/store/feature-game-detail').then(
+              (module) => module.StoreFeatureGameDetailModule
+            ),
+        },
+      ],
+      { initialNavigation: 'enabled' }
+    ),
     MatCardModule,
     StoreUiSharedModule,
   ],
