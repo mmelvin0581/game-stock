@@ -1,7 +1,6 @@
-//@ts-nocheck
 import { Component } from '@angular/core';
-import { getAllGames } from '../fake-api';
 import { formatRating } from '@game-stock/store/util-formatters';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'game-stock-root',
@@ -9,7 +8,9 @@ import { formatRating } from '@game-stock/store/util-formatters';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  constructor(private http: HttpClient) {}
+
   title = 'Game Stock';
-  games = getAllGames();
   formatRating = formatRating;
+  games = this.http.get<any[]>('/api/games');
 }

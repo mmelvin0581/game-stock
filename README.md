@@ -18,7 +18,6 @@
   - [Generate a utility lib](#generate-a-utility-lib)
   - [Generate a route lib](#generate-a-route-lib)
   - [Add a NestJS API](#add-a-nestjs-api)
-  - [Displaying a full game in the routed game-detail component](#displaying-a-full-game-in-the-routed-game-detail-component)
   - [Generate a type lib that the API and frontend can share](#generate-a-type-lib-that-the-api-and-frontend-can-share)
   - [Module boundaries](#module-boundaries)
   - [Workspace schematics](#workspace-schematics)
@@ -355,7 +354,12 @@ Our new routed component suddenly needs access to the games as well, so in this 
 You do not need to be familiar with Nest (and you can use the `@nrwl/express:app` plugin instead if you wish). All the NestJS specific code for serving the games is provided in the solution.
 
 - Stop any running `nx serve` instance
-- `yarn add @nrwl/nest`
+- Add NestJS Schematics
+
+  ```bash
+  yarn add @nrwl/nest
+  ```
+
 - Generate a new NestJS app, called `api` with `--linter=tslint` option
 
   ⚠️ Make sure you instruct the schematic to configure a proxy from the frontend `store` to the new `api` service (use `--help` to see the available options)
@@ -364,31 +368,26 @@ You do not need to be familiar with Nest (and you can use the `@nrwl/express:app
   nx generate @nrwl/nest:application api --frontendProject=store --linter=tslint
   ```
 
-- Copy the code from the `fake api` to the new Nest [apps/api/src/app/app.service.ts](examples/AddANestJsApi/app.service.ts) and expose the `getGames()` and `getGame()` methods
+- Copy the code from the [here](examples/AddANestJsApi/app.service.ts) to the new Nest [apps/api/src/app/app.service.ts](apps/api/src/app/app.service.ts) and expose the `getGames()` and `getGame()` methods
 
-- Update the Nest [app.controller.ts](examples/AddANestJsApi/app.controller.ts) to use the new methods from the service
+- Copy the code from [here](examples/AddANestJsApi/app.controller.ts) that updates the Nest [app.controller.ts](apps/api/src/app/app.controller.ts) to use the new methods from the service
 
 - Let's now inspect the dependency graph!
-- Inspect what changed from the last time you committed, then commit your changes
-
----
-
-## Displaying a full game in the routed game-detail component
 
 Now that we have a proper API, we can remove the `fake-api` created earlier and make proper HTTP requests. We'll also look at how the Nrwl NestJS schematics created a helpful proxy configuration for us.
 
-- We can now delete the `fake-api` from the `store` app
-- Import the `HttpClientModule` in `apps/store/src/app.module.ts` and add it to the module's imports array:
+- Delete the `fake-api` from the `store` app
+- Import the `HttpClientModule` in [apps/store/src/app/app.module.ts](apps/store/src/app/app.module.ts) and add it to the module's imports array:
 
   ```ts
     import { HttpClientModule } from '@angular/common/http';
   ```
 
-- Within the same folder, inject the `HttpClient` in the [app.component.ts](examples/DisplayFullGameRouted/app.component.ts)'s constructor and call your new API as an _HTTP request_
+- Use the code from [here](examples/DisplayFullGameRouted/app.component.ts) to inject the `HttpClient` in the [app.component.ts](apps/store/src/app/app.component.ts)'s constructor and call your new API as an _HTTP request_
 
    ⚠️ _Notice how we assume it will be available at `/api` (more on that below)_
 
-- Because our list of `games` is now an Observable, we need to add an `async` pipe in the template that gets the games:
+- Because our list of `games` is now an Observable, we need to add an `async` pipe in the template that gets the games in [app.component.html](apps/store/src/app/app.component.html):
 
   ```html
    <mat-card
@@ -407,15 +406,14 @@ Now that we have a proper API, we can remove the `fake-api` created earlier and 
 
 ---
 
-Even though the frontend and server are being exposed at different ports, we can call `/api` from the frontend store because `Nx` created a proxy configuration for us (see `apps/store/proxy.conf.json`) so any calls to `/api` are being routed to the correct address/port where the API is running.
+Even though the frontend and server are being exposed at different ports, we can call `/api` from the frontend store because `Nx` created a proxy configuration for us (see [apps/store/proxy.conf.json](apps/store/proxy.conf.json)) so any calls to `/api` are being routed to the correct address/port where the API is running.
 
 ---
 
 - Inside the `libs/store/feature-game-detail/src/lib` folder, replace the following files:
-  - [/game-detail/game-detail.component.ts](examples/DisplayFullGameRouted/game-detail/game-detail.component.ts)
-  - [/game-detail/game-detail.component.css](examples/DisplayFullGameRouted/game-detail/game-detail.component.css)
-  - [/game-detail/game-detail.component.html](examples/DisplayFullGameRouted/game-detail/game-detail.component.html)
-  - [/store-feature-game-detail.module.ts](examples/DisplayFullGameRouted/store-feature-game-detail.module.ts)
+  - [/game-detail/game-detail.component.ts](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.ts) with [this](examples/DisplayFullGameRouted/game-detail/game-detail.component.ts)
+  - [/game-detail/game-detail.component.html](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.html) with [this](examples/DisplayFullGameRouted/game-detail/game-detail.component.html)
+  - [/store-feature-game-detail.module.ts](libs/store/feature-game-detail/src/lib/store-feature-game-detail.module.ts) with [this](examples/DisplayFullGameRouted/store-feature-game-detail.module.ts)
 
    ⚠️ Notice how we're using the shared `formatRating()` function in our routed component as well!
 
