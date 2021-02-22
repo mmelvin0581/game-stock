@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@game-stock/store/ui-shared": ["libs/store/ui-shared/src/index.ts"]
+      "@game-stock/store/ui-shared": ["libs/store/ui-shared/src/index.ts"],
+      "@game-stock/store/util-formatters": [
+        "libs/store/util-formatters/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
