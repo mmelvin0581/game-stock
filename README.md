@@ -69,7 +69,7 @@ Make sure you are in the `game-stock` directory.
   nx --version
   ```
 
-- Install the CLI globall (alternatively, you can run `yarn nx` in place of `nx`)
+- If not, install the CLI globall (alternatively, you can run `yarn nx` in place of `nx`)
 
   ```bash
   npm i -g @nrwl/cli
@@ -101,11 +101,11 @@ Make sure you are in the `game-stock` directory.
   ```
 
 - Create a `fake-api/index.ts` file in the `apps/store/src` folder
-- Copy the code from [here](examples/GenerateAnAngularApp/fake-api/index.ts) and paste it into the file
-- Replace `apps/store/src/app/app.component.html` with [this](examples/GenerateAnAngularApp/app.component.html) code
-- Replace `apps/store/src/app/app.component.css` with [this](examples/GenerateAnAngularApp/app.component.css) code
-- Replace `apps/store/src/app/app.component.ts` with [this](examples/GenerateAnAngularApp/app.component.ts) code
-- Add the Material Card Module to `apps/store/src/app/app.module.ts`
+- Copy the code from [here](https://github.com/mmelvin0581/game-stock/blob/01-GenerateAnAngularApp/examples/GenerateAnAngularApp/fake-api/index.ts) and paste it into the file
+- Replace `apps/store/src/app/app.component.html` with [this](https://github.com/mmelvin0581/game-stock/blob/01-GenerateAnAngularApp/examples/GenerateAnAngularApp/app.component.html) code
+- Replace `apps/store/src/app/app.component.css` with [this](https://github.com/mmelvin0581/game-stock/blob/01-GenerateAnAngularApp/examples/GenerateAnAngularApp/app.component.css) code
+- Replace `apps/store/src/app/app.component.ts` with [this](https://github.com/mmelvin0581/game-stock/blob/01-GenerateAnAngularApp/examples/GenerateAnAngularApp/app.component.ts) code
+- Add the Material Card Module to [apps/store/src/app/app.module.ts](apps/store/src/app/app.module.ts)
   
   ```ts
   import { MatCardModule } from '@angular/material/card`
@@ -133,7 +133,7 @@ We'll build the app we just created, and look at what builders are and how to cu
   ```
 
 - You now have a `dist` folder
-- Open `workspace.json` and look at the object under `projects/store/targets/build`
+- Open [workspace.json](workspace.json) and look at the object under `projects/store/targets/build`
   - This is the **architect**, and it has a **executor** option, that points to `@angular-devkit/build-angular:browser`
 
 - Now build with the **production** flag
@@ -143,7 +143,7 @@ We'll build the app we just created, and look at what builders are and how to cu
   ```
 
 - Notice the `dist` folder no longer contains _sourcemaps_
-- Modify `workspace.json` to instruct the builder to import Angular Material styles from `./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css`
+- Modify [workspace.json](workspace.json) to instruct the builder to import Angular Material styles from `node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css`
   - So we see that we can modify builders through the command line and in `workspace.json`
 - The **serve** architect (located a bit lower in `workspace.json`) also contains a builder, that _uses_ the output from the **build** architect we just changed
   - So we can just re-start `nx serve store` see the new styles you added!
@@ -168,7 +168,7 @@ Let's add a header to our app. Because headers can be shared with other componen
   nx generate @nrwl/angular:component header --export --project=store-ui-shared
   ```
 
-- Import `MatToolbarModule` in the new shared module you just created
+- Import `MatToolbarModule` in the new [shared module](libs/store/ui-shared/src/lib/store-ui-shared.module.ts) you just created
 
   ```ts
   import { MatToolbarModule } from '@angular/material/toolbar';
@@ -178,9 +178,9 @@ Let's add a header to our app. Because headers can be shared with other componen
     //...
   ```
 
-- Replace the `header` component's .html with [this](examples/GenereateAComponentLibrary/header.component.html) code
-- Replace the `header` component .ts with [this](examples/GenereateAComponentLibrary/header.component.ts) code
-- Import the `StoreUiSharedModule` into `apps/store/src/app/app.module.ts`
+- Replace the [header component's .html](libs/store/ui-shared/src/lib/header/header.component.html) with [this](https://github.com/mmelvin0581/game-stock/blob/03-GenerateAComponentLibrary/libs/store/ui-shared/src/lib/header/header.component.html) code
+- Replace the [header component's .ts](libs/store/ui-shared/src/lib/header/header.component.ts) with [this](https://github.com/mmelvin0581/game-stock/blob/03-GenerateAComponentLibrary/libs/store/ui-shared/src/lib/header/header.component.ts) code
+- Import the `StoreUiSharedModule` into [apps/store/src/app/app.module.ts](apps/store/src/app/app.module.ts)
 
   ```typescript
   import { StoreUiSharedModule } from '@game-stock/store/ui-shared';
@@ -193,7 +193,7 @@ Let's add a header to our app. Because headers can be shared with other componen
     //...
   ```
 
-- Add the new component to `apps/store/src/app/app.component.html`
+- Add the new component to [apps/store/src/app/app.component.html](apps/store/src/app/app.component.html)
 
   ```html
    <game-stock-header title="Game Stock"></game-stock-header>
@@ -225,10 +225,10 @@ We will create a shared utility lib where we'll add our formatters and see how t
   nx generate @nrwl/workspace:lib util-formatters --directory=store --linter=tslint
   ```
 
-- Add the [code for the utility function](examples/GenerateAUtilityLib/store-util-formatters.ts) to the new library you just created `libs/store/util-formatters/src/lib/store-util-formatters.ts`
+- Add the [code for the utility function](https://github.com/mmelvin0581/game-stock/blob/04-GenerateAUtilityLib/examples/GenerateAUtilityLib/store-util-formatters.ts) to the new library you just created [libs/store/util-formatters/src/lib/store-util-formatters.ts](libs/store/util-formatters/src/lib/store-util-formatters.ts)
 - Use it in your frontend project to format the rating for each game
 
-  `app.component.ts`:
+  [app.component.ts](apps/store/src/app/app.component.ts)
 
   ```ts
   import { formatRating } from '@game-stock/store/util-formatters';
@@ -239,7 +239,7 @@ We will create a shared utility lib where we'll add our formatters and see how t
   }
   ```
 
-  `app.component.html`:
+  [app.component.html](apps/store/src/app/app.component.html)
 
   ```html
   {{ formatRating(game.rating) }}
@@ -270,7 +270,7 @@ We will create a shared utility lib where we'll add our formatters and see how t
   nx generate @schematics/angular:component --name=game-detail --project=store-feature-game-detail --module=store-feature-game-detail.module.ts
   ```
 
-- Change the routing path in `apps/store/src/app/app.module.ts` to pick up the game ID from the URL
+- Change the routing path in [apps/store/src/app/app.module.ts](apps/store/src/app/app.module.ts) to pick up the game ID from the URL
 
   ```ts
   {
@@ -280,21 +280,21 @@ We will create a shared utility lib where we'll add our formatters and see how t
   }
   ```
 
-- Uncomment _line 11_ in `libs/store/feature-game-detail/src/lib/store-feature-game-detail.module.ts` and make sure it's pointing to the `game-detail` component you generated above
-- Import `MatCardModule` in `store-feature-game-detail.module.ts` and add it to the module's `imports: [...]`:
+- Uncomment _line 11_ in [libs/store/feature-game-detail/src/lib/store-feature-game-detail.module.ts](libs/store/feature-game-detail/src/lib/store-feature-game-detail.module.ts) and make sure it's pointing to the `game-detail` component you generated above
+- Import `MatCardModule` in [store-feature-game-detail.module.ts](libs/store/feature-game-detail/src/lib/store-feature-game-detail.module.ts) and add it to the module's `imports: [...]`:
 
   ```ts
   import { MatCardModule } from '@angular/material/card';
   ```
 
 - Populate your new component with the provided files:
-  - [game-detail.component.ts](examples/GenerateARouteLib/game-detail.component.ts)
-  - [game-detail.component.css](examples/GenerateARouteLib/game-detail.component.css)
-  - [game-detail.component.html](examples/GenerateARouteLib/game-detail.component.html)
+  - [game-detail.component.ts](https://github.com/mmelvin0581/game-stock/blob/04-GenerateAUtilityLib/examples/GenerateARouteLib/game-detail.component.ts)
+  - [game-detail.component.css](https://github.com/mmelvin0581/game-stock/blob/04-GenerateAUtilityLib/examples/GenerateARouteLib/game-detail.component.css)
+  - [game-detail.component.html](https://github.com/mmelvin0581/game-stock/blob/04-GenerateAUtilityLib/examples/GenerateARouteLib/game-detail.component.html)
 
 - We now need to display your new routed component. Let's add a `<router-outlet>` below our list of cards:
 
-  `apps/store/src/app/app.component.html`:
+  [apps/store/src/app/app.component.html](apps/store/src/app/app.component.html)
 
   ```html
   <div class="container">
@@ -309,7 +309,7 @@ We will create a shared utility lib where we'll add our formatters and see how t
 
 - Make clicking on each card route to the `feature-game-detail` module with the game's ID:
 
-  `apps/store/src/app/app.component.html`:
+  [apps/store/src/app/app.component.html](apps/store/src/app/app.component.html)
 
   ```html
   <div class="container">
@@ -329,8 +329,6 @@ We will create a shared utility lib where we'll add our formatters and see how t
 - Launch the dependency graph and see what's been added
 - Inspect what changed from the last time you committed, then commit your changes
 
----
-
 The result is still pretty simple though. Our route just displays the ID of the selected game in a card. It would be great if we had some API to get the full game from that ID!
 
 ---
@@ -346,7 +344,7 @@ Our new routed component suddenly needs access to the games as well, so in this 
 You do not need to be familiar with Nest (and you can use the `@nrwl/express:app` plugin instead if you wish). All the NestJS specific code for serving the games is provided in the solution.
 
 - Stop any running `nx serve` instance
-- `yarn add @nrwl/nest`
+- Add NestJS Schematics by running the command `yarn add @nrwl/nest` in the `game-stock` directory
 - Generate a new NestJS app, called `api` with `--linter=tslint` option
 
   ⚠️ Make sure you instruct the schematic to configure a proxy from the frontend `store` to the new `api` service (use `--help` to see the available options)
@@ -355,9 +353,9 @@ You do not need to be familiar with Nest (and you can use the `@nrwl/express:app
   nx generate @nrwl/nest:application api --frontendProject=store --linter=tslint
   ```
 
-- Copy the code from the `fake api` to the new Nest [apps/api/src/app/app.service.ts](examples/AddANestJsApi/app.service.ts) and expose the `getGames()` and `getGame()` methods
+- Copy the code from the [fake api](apps/store/src/fake-api/index.ts) to the new Nest [apps/api/src/app/app.service.ts](examples/AddANestJsApi/app.service.ts) and expose the `getGames()` and `getGame()` methods
 
-- Update the Nest [app.controller.ts](examples/AddANestJsApi/app.controller.ts) to use the new methods from the service
+- Update the Nest [app.controller.js](apps/api/src/app/app.controller.ts) [this code](https://github.com/mmelvin0581/game-stock/blob/06-AddANestJsApi/apps/api/src/app/app.controller.ts) to use the new methods from the service
 
 - Let's now inspect the dependency graph!
 - Inspect what changed from the last time you committed, then commit your changes
@@ -369,17 +367,17 @@ You do not need to be familiar with Nest (and you can use the `@nrwl/express:app
 Now that we have a proper API, we can remove the `fake-api` created earlier and make proper HTTP requests. We'll also look at how the Nrwl NestJS schematics created a helpful proxy configuration for us.
 
 - We can now delete the `fake-api` from the `store` app
-- Import the `HttpClientModule` in `apps/store/src/app.module.ts` and add it to the module's imports array:
+- Import the `HttpClientModule` in [apps/store/src/app.module.ts](apps/store/src/app/app.module.ts) and add it to the module's imports array:
 
   ```ts
     import { HttpClientModule } from '@angular/common/http';
   ```
 
-- Within the same folder, inject the `HttpClient` in the [app.component.ts](examples/DisplayFullGameRouted/app.component.ts)'s constructor and call your new API as an _HTTP request_
+- Within the same folder, inject the `HttpClient` in the [app.component.ts](apps/store/src/app/app.component.ts)'s constructor and call your new API as an _HTTP request_, use [this code](https://github.com/mmelvin0581/game-stock/blob/06-AddANestJsApi/examples/DisplayFullGameRouted/app.component.ts)
 
    ⚠️ _Notice how we assume it will be available at `/api` (more on that below)_
 
-- Because our list of `games` is now an Observable, we need to add an `async` pipe in the template that gets the games:
+- Because our list of `games` is now an Observable, we need to add an `async` pipe in the [template](apps/store/src/app/app.component.html) that gets the games:
 
   ```html
    <mat-card
@@ -396,17 +394,15 @@ Now that we have a proper API, we can remove the `fake-api` created earlier and 
 
 - Everything should still look/function the same
 
----
-
-Even though the frontend and server are being exposed at different ports, we can call `/api` from the frontend store because `Nx` created a proxy configuration for us (see `apps/store/proxy.conf.json`) so any calls to `/api` are being routed to the correct address/port where the API is running.
+Even though the frontend and server are being exposed at different ports, we can call `/api` from the frontend store because `Nx` created a proxy configuration for us (see [apps/store/proxy.conf.json](apps/store/proxy.conf.json)) so any calls to `/api` are being routed to the correct address/port where the API is running.
 
 ---
 
 - Inside the `libs/store/feature-game-detail/src/lib` folder, replace the following files:
-  - [/game-detail/game-detail.component.ts](examples/DisplayFullGameRouted/game-detail/game-detail.component.ts)
-  - [/game-detail/game-detail.component.css](examples/DisplayFullGameRouted/game-detail/game-detail.component.css)
-  - [/game-detail/game-detail.component.html](examples/DisplayFullGameRouted/game-detail/game-detail.component.html)
-  - [/store-feature-game-detail.module.ts](examples/DisplayFullGameRouted/store-feature-game-detail.module.ts)
+  - [/game-detail/game-detail.component.ts](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.ts) with [this code](https://github.com/mmelvin0581/game-stock/blob/07-GenerateSharedTypeLib/examples/DisplayFullGameRouted/game-detail/game-detail.component.ts)
+  - [/game-detail/game-detail.component.css](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.css) with [this code](https://github.com/mmelvin0581/game-stock/blob/07-GenerateSharedTypeLib/examples/DisplayFullGameRouted/game-detail/game-detail.component.css)
+  - [/game-detail/game-detail.component.html](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.html) with [this code](https://github.com/mmelvin0581/game-stock/blob/07-GenerateSharedTypeLib/examples/DisplayFullGameRouted/game-detail/game-detail.component.html)
+  - [/store-feature-game-detail.module.ts](libs/store/feature-game-detail/src/lib/store-feature-game-detail.module.ts) with [this code](https://github.com/mmelvin0581/game-stock/blob/07-GenerateSharedTypeLib/examples/DisplayFullGameRouted/store-feature-game-detail.module.ts)
 
    ⚠️ Notice how we're using the shared `formatRating()` function in our routed component as well!
 
@@ -418,28 +414,24 @@ Even though the frontend and server are being exposed at different ports, we can
 ## Generate a type lib that the API and frontend can share
 
 - Stop serving both the API and the frontend
-- Generate a new `@nrwl/workspace` lib called `util-interface` inside the `libs/api` folder. Use `--linter=tslint` option
+- Generate a new `@nrwl/workspace` lib called `util-interface` inside the `libs` folder. Use `--linter=tslint` option
 
   ```bash
-  nx generate @nrwl/workspace:lib util-interface --directory=api --linter=tslint
+  nx generate @nrwl/workspace:lib util-interface --linter=tslint
   ```
 
-  ⚠️ It's **important** that we create it in the `/api` folder for now
-
-- Create your `Game` interface: see `libs/api/util-interface/src/lib/`[util-interface.ts](examples/GenerateSharedTypeLib/util-interface.ts)
-- Import it in the API service: `apps/api/src/app/app.service.ts`
+- Create your `Game` interface with [this code](https://github.com/mmelvin0581/game-stock/blob/07-GenerateSharedTypeLib/examples/GenerateSharedTypeLib/util-interface.ts) replacing the newly created [util-interface.ts](libs/util-interface/src/lib/util-interface.ts)
+- Import it in the API service: [apps/api/src/app/app.service.ts](apps/api/src/app/app.service.ts)
 
   ⚠️ You might need to restart the Typescript compiler in your editor
 
   ```typescript
-    import { Game } from '@game-stock/api/util-interface';
+    import { Game } from '@game-stock/util-interface';
     const games: Game[] = [...];
   ```
 
 - Build the API and make sure there are no errors
 - Inspect the dependency graph
-
----
 
 Our frontend store makes calls to the API via the `HttpClient` service:
 
@@ -449,33 +441,21 @@ this.http.get<any>(`/api/games/${id}`);
 
 But it's currently typed to `any` - so our component has no idea about the shape of the objects it'll get back
 
-Let's fix that - we already have a `Game` interface in a lib. But it's nested in the `api` folder - we need to move it out to the root `libs/` folder so any project can use it
+Let's use the SAME interface that the backend is using.
 
----
+- In [apps/store/src/app/app.component.ts](apps/store/src/app/app.component.ts):
 
-- Use the `@nrwl/workspace:move` schematic to move the interface lib created above into the root `/libs` folder
+  ```typescript
+  import { Game } from '@game-stock/util-interface';
 
-  ```shell
-  nx generate @nrwl/workspace:move --projectName=api-util-interface util-interface
+  this.http.get<Game[]>('/api/games');
   ```
 
-- We can now import it in the frontend components and use it when making the `http` request:
+- Routed game detail component [libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.ts](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.ts):
 
-    Frontend store shell app: `apps/store/src/app/app.component.ts`
-
-    ```typescript
-    import { Game } from '@game-stock/util-interface';
-
-    this.http.get<Game[]>('/api/games');
-    ```
-
-    Routed game detail component: `libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.ts`
-
-    ```typescript
-    this.http.get<Game>(`/api/games/${id}`);
-    ```
-
-    ⚠️ Notice how we didn't have to update the imports in the API. The `move` schematic took care of that for us!
+  ```typescript
+  this.http.get<Game>(`/api/games/${id}`);
+  ```
 
 - Trigger a build of both the store and the API projects and make sure it passes
 - Inspect the dependency graph
@@ -510,10 +490,6 @@ Let's fix that - we already have a `Game` interface in a lib. But it's nested in
         },
         "util-interface": {
           "tags": ["scope:shared", "type:util"]
-        },
-        "store-ui-shared-e2e": {
-          "tags": ["scope:store", "type:e2e"],
-          "implicitDependencies": ["store-ui-shared"]
         }
       }"
     ```
