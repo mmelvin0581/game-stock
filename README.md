@@ -18,7 +18,6 @@
   - [Generate a utility lib](#generate-a-utility-lib)
   - [Generate a route lib](#generate-a-route-lib)
   - [Add a NestJS API](#add-a-nestjs-api)
-  - [Displaying a full game in the routed game-detail component](#displaying-a-full-game-in-the-routed-game-detail-component)
   - [Generate a type lib that the API and frontend can share](#generate-a-type-lib-that-the-api-and-frontend-can-share)
   - [Module boundaries](#module-boundaries)
 
@@ -358,11 +357,6 @@ You do not need to be familiar with Nest (and you can use the `@nrwl/express:app
 - Update the Nest [app.controller.js](apps/api/src/app/app.controller.ts) [this code](https://github.com/mmelvin0581/game-stock/blob/06-AddANestJsApi/apps/api/src/app/app.controller.ts) to use the new methods from the service
 
 - Let's now inspect the dependency graph!
-- Inspect what changed from the last time you committed, then commit your changes
-
----
-
-## Displaying a full game in the routed game-detail component
 
 Now that we have a proper API, we can remove the `fake-api` created earlier and make proper HTTP requests. We'll also look at how the Nrwl NestJS schematics created a helpful proxy configuration for us.
 
@@ -399,6 +393,7 @@ Even though the frontend and server are being exposed at different ports, we can
 ---
 
 - Inside the `libs/store/feature-game-detail/src/lib` folder, replace the following files:
+  
   - [/game-detail/game-detail.component.ts](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.ts) with [this code](https://github.com/mmelvin0581/game-stock/blob/07-GenerateSharedTypeLib/examples/DisplayFullGameRouted/game-detail/game-detail.component.ts)
   - [/game-detail/game-detail.component.css](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.css) with [this code](https://github.com/mmelvin0581/game-stock/blob/07-GenerateSharedTypeLib/examples/DisplayFullGameRouted/game-detail/game-detail.component.css)
   - [/game-detail/game-detail.component.html](libs/store/feature-game-detail/src/lib/game-detail/game-detail.component.html) with [this code](https://github.com/mmelvin0581/game-stock/blob/07-GenerateSharedTypeLib/examples/DisplayFullGameRouted/game-detail/game-detail.component.html)
